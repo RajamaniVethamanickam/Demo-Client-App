@@ -6,10 +6,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { InputsModule } from '@progress/kendo-angular-inputs';
+import { RatingComponent } from './_component/rating/rating.component';
+import {
+  GridModule,
+  PDFModule,
+  ExcelModule,
+} from "@progress/kendo-angular-grid";
+import { ChartsModule } from "@progress/kendo-angular-charts";
+import { IndicatorsModule } from "@progress/kendo-angular-indicators";
 
+
+import "hammerjs";
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,
@@ -17,7 +29,13 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     NgbModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    InputsModule,
+    GridModule,
+    ChartsModule,
+    PDFModule,
+    ExcelModule,
+    IndicatorsModule,
   ],
   providers: [
     provideClientHydration()
