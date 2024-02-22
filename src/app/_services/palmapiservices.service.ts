@@ -14,4 +14,7 @@ baseUrl = 'http://localhost/PALMWebAPI-Dev/api/';
   postAsync(url: any, data: any, headers?: any){
      return this.http.post(this.baseUrl+url, data,headers);
   }
+  getAsync(url: any, data: any, headers?: any){
+    return this.http.post(this.baseUrl+url, data,headers);
+ }
 }

@@ -18,10 +18,14 @@ import { IndicatorsModule } from "@progress/kendo-angular-indicators";
 
 
 import "hammerjs";
+import { SearchComponent } from './_component/Menu/search/search.component';
+import { LayoutComponent } from './layout/layout.component';
 @NgModule({
   declarations: [
     AppComponent,
-    RatingComponent
+    RatingComponent,
+    SearchComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +40,7 @@ import "hammerjs";
     PDFModule,
     ExcelModule,
     IndicatorsModule,
+    AppRoutingModule
   ],
   providers: [
     provideClientHydration()

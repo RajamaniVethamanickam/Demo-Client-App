@@ -1,0 +1,187 @@
+<!-- <span class="k-icon k-i-loading" style="color: #ff6358" *ngIf="true"></span> -->
+<div class="row">
+  <!-- Empty gray column -->
+  <div class="col-md-1">
+    <img
+      src="../../assets/images/sidebar.png"
+      style="margin-top: -30px; height: 85%; margin-left: -30px"
+    />
+  </div>
+  <div class="col-md-11">
+    <app-layout></app-layout>
+    <kendo-grid
+      [kendoGridBinding]="gridView"
+      kendoGridSelectBy="id"
+      [(selectedKeys)]="mySelection"
+      [pageSize]="20"
+      [pageable]="true"
+      [sortable]="true"
+      [groupable]="true"
+      [reorderable]="true"
+      [resizable]="true"
+      [height]="500"
+      [columnMenu]="{ filter: true }"
+    >
+      <ng-template kendoGridToolbarTemplate>
+        <kendo-textbox
+          [style.width.px]="165"
+          placeholder="Search in all columns..."
+          (valueChange)="onFilter($event)"
+        ></kendo-textbox>
+        <kendo-grid-spacer></kendo-grid-spacer>
+        <button kendoGridExcelCommand type="button" [svgIcon]="excelSVG">
+          Export to Excel
+        </button>
+        <button kendoGridPDFCommand [svgIcon]="pdfSVG">Export to PDF</button>
+      </ng-template>
+      <kendo-grid-checkbox-column
+        [width]="45"
+        [headerClass]="{ 'text-center': true }"
+        [class]="{ 'text-center': true }"
+        [resizable]="false"
+        [columnMenu]="false"
+        [showSelectAll]="true"
+      ></kendo-grid-checkbox-column>
+      <kendo-grid-column-group title="Employee" [columnMenu]="false">
+        <kendo-grid-column field="pMFlag" title="Type" [width]="120">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="customer-name">{{ dataItem.pmFlag }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="memberAssignedTO"
+          title="Member Assigned TO"
+          [width]="130"
+        >
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="accountManager"
+          title="Account Manager"
+          [width]="220"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="customer-name">{{ dataItem.accountManager }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="name" title="Name" [width]="220">
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="customer-name">{{ dataItem.name }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="businessName"
+          title="Business Name"
+          [width]="220"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="customer-name">{{ dataItem.businessName }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="status"
+          title="Status"
+          [width]="100"
+          [class]="{ 'text-center': true }"
+          [resizable]="false"
+          filter="boolean"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <kendo-badge-container style="display: inline">
+              <kendo-badge
+                size="large"
+                [themeColor]="
+                  dataItem.status === 'Active' ? 'success' : 'error'
+                "
+              >
+                {{ dataItem.status == "Active" ? "Active" : "Inactive" }}
+              </kendo-badge>
+            </kendo-badge-container>
+          </ng-template>
+        </kendo-grid-column>
+      </kendo-grid-column-group>
+      <kendo-grid-column-group title="Performance" [columnMenu]="false">
+        <kendo-grid-column
+          field="createdDate"
+          title="Created Date"
+          [width]="150"
+        >
+          <ng-template
+            kendoGridFilterCellTemplate
+            let-filter
+            let-column="column"
+          >
+            <kendo-grid-date-filter-cell [column]="column" [filter]="filter">
+            </kendo-grid-date-filter-cell>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="salesTotal"
+          title="salesTotal"
+          [width]="150"
+          filter="numeric"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <span [ngClass]="{ 'red text-bold': dataItem.salesTotal < 0 }">{{
+              dataItem.salesTotal | currency
+            }}</span>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="grossMargin"
+          title="Gross Margin"
+          [width]="230"
+          [resizable]="false"
+          filter="numeric"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <kendo-sparkline
+              type="bar"
+              [data]="dataItem.grossMargin"
+              [tooltip]="{ visible: false }"
+              [transitions]="true"
+              [seriesDefaults]="{
+                labels: { background: 'none', visible: true, format: '{0}%' }
+              }"
+            >
+              <kendo-chart-area [opacity]="0" [width]="200"></kendo-chart-area>
+              <kendo-chart-value-axis>
+                <kendo-chart-value-axis-item [min]="0" [max]="130">
+                </kendo-chart-value-axis-item>
+              </kendo-chart-value-axis>
+            </kendo-sparkline>
+          </ng-template>
+        </kendo-grid-column>
+      </kendo-grid-column-group>
+
+      <kendo-grid-column-group title="Contacts" [columnMenu]="false">
+        <kendo-grid-column
+          field="preferredPhone"
+          title="Preferred Phone"
+          [width]="220"
+        >
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="customer-name">{{ dataItem.preferredPhone }}</div>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="businessphone"
+          title="Business Phone"
+          [width]="130"
+        >
+        </kendo-grid-column>
+        <kendo-grid-column field="homePhone" title="Home Phone" [width]="130">
+        </kendo-grid-column>
+        <kendo-grid-column field="email" title="Email" [width]="200">
+        </kendo-grid-column>
+        <kendo-grid-column field="address" title="Address" [width]="200">
+        </kendo-grid-column>
+      </kendo-grid-column-group>
+
+      <kendo-grid-pdf
+        fileName="Employees.pdf"
+        [repeatHeaders]="true"
+      ></kendo-grid-pdf>
+      <kendo-grid-excel fileName="Employees.xlsx"></kendo-grid-excel>
+    </kendo-grid>
+  </div>
+</div>
